@@ -9,8 +9,8 @@ import lib.virgo.showcase.ui.loadImage
 import lib.virgo.showcase.ui.setTextSizeInSp
 import lib.virgo.showcase.databinding.ItemSlidableContentBinding
 
-internal class SlidableContentAdapter(private val slidableContentList: List<SlidableContent>) :
-	RecyclerView.Adapter<SlidableContentAdapter.ViewPagerViewHolder>() {
+internal class SlideableContentAdapter(private val slideableContentList: List<SlideableContent>) :
+	RecyclerView.Adapter<SlideableContentAdapter.ViewPagerViewHolder>() {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder =
 		ViewPagerViewHolder(
@@ -22,43 +22,43 @@ internal class SlidableContentAdapter(private val slidableContentList: List<Slid
 		)
 
 	override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
-		holder.bind(slidableContentList[position])
+		holder.bind(slideableContentList[position])
 	}
 
-	override fun getItemCount(): Int = slidableContentList.size
+	override fun getItemCount(): Int = slideableContentList.size
 
 	inner class ViewPagerViewHolder(
 		private val binding: ItemSlidableContentBinding,
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(item: SlidableContent) {
+		fun bind(item: SlideableContent) {
 			with(binding) {
-				val viewState = SlidableContentViewState(item)
+				val viewState = SlideableContentViewState(item)
 
 				with(textViewTitle) {
 					typeface = Typeface.create(
-						viewState.slidableContent.titleTextFontFamily,
-						viewState.slidableContent.titleTextStyle,
+						viewState.slideableContent.titleTextFontFamily,
+						viewState.slideableContent.titleTextStyle,
 					)
-					text = viewState.slidableContent.title
+					text = viewState.slideableContent.title
 					textAlignment = viewState.getTextPosition()
-					setTextColor(viewState.slidableContent.titleTextColor)
+					setTextColor(viewState.slideableContent.titleTextColor)
 					isVisible = viewState.isTitleVisible()
-					setTextSizeInSp(viewState.slidableContent.titleTextSize)
+					setTextSizeInSp(viewState.slideableContent.titleTextSize)
 				}
 				with(textViewDescription) {
 					typeface = Typeface.create(
-						viewState.slidableContent.descriptionTextFontFamily,
-						viewState.slidableContent.descriptionTextStyle,
+						viewState.slideableContent.descriptionTextFontFamily,
+						viewState.slideableContent.descriptionTextStyle,
 					)
-					text = viewState.slidableContent.description
+					text = viewState.slideableContent.description
 					textAlignment = viewState.getTextPosition()
-					setTextColor(viewState.slidableContent.descriptionTextColor)
+					setTextColor(viewState.slideableContent.descriptionTextColor)
 					isVisible = viewState.isDescriptionVisible()
-					setTextSizeInSp(viewState.slidableContent.descriptionTextSize)
+					setTextSizeInSp(viewState.slideableContent.descriptionTextSize)
 				}
 
-				imageView.loadImage(viewState.slidableContent.imageUrl)
+				imageView.loadImage(viewState.slideableContent.imageUrl)
 			}
 		}
 	}

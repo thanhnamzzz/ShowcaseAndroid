@@ -6,15 +6,15 @@ import lib.virgo.showcase.ui.tooltip.TextPosition
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class SlidableContent(
+data class SlideableContent(
     var imageUrl: String,
     var title: String?,
-    @ColorInt var titleTextColor: Int,
+    @param:ColorInt var titleTextColor: Int,
     var titleTextSize: Float,
     var titleTextFontFamily: String,
     var titleTextStyle: Int,
     var description: String?,
-    @ColorInt var descriptionTextColor: Int,
+    @param:ColorInt var descriptionTextColor: Int,
     var descriptionTextSize: Float,
     var descriptionTextFontFamily: String,
     var descriptionTextStyle: Int,

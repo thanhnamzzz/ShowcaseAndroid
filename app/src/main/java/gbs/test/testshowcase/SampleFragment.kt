@@ -18,8 +18,8 @@ import gbs.test.testshowcase.databinding.FragmentSampleBinding
 import lib.virgo.showcase.showcase.ShowcaseManager
 import lib.virgo.showcase.ui.showcase.HighlightType
 import lib.virgo.showcase.ui.showcase.ShowcaseView
-import lib.virgo.showcase.ui.slidablecontent.SlidableContent
-import lib.virgo.showcase.ui.slidablecontent.slidableContent
+import lib.virgo.showcase.ui.slidablecontent.SlideableContent
+import lib.virgo.showcase.ui.slidablecontent.slideableContent
 import lib.virgo.showcase.ui.tooltip.ArrowPosition
 import lib.virgo.showcase.ui.tooltip.TextPosition
 import lib.virgo.showcase.util.ActionType
@@ -196,11 +196,12 @@ class SampleFragment : Fragment() {
 					.titleText("Multiple View Focus")
 					.titleTextSize(16f)
 					.showCloseButton(true)
-					.arrowPosition(ArrowPosition.UP)
+					.arrowPosition(ArrowPosition.DOWN)
 					.highlightType(HighlightType.RECTANGLE)
 					.highlightPadding(8f)
 					.textPosition(TextPosition.START)
 					.statusBarVisible(isStatusBarVisible)
+					.highlightRadius(10f, 10f, 10f, 10f)
 					.build()
 					.show(
 						this@SampleFragment,
@@ -213,7 +214,7 @@ class SampleFragment : Fragment() {
 			buttonSlidableContent.setOnClickListener {
 				ShowcaseManager.Builder()
 					.focus(buttonSlidableContent)
-					.setSlidableContentList(buildSlidableContentList())
+					.setSlideableContentList(buildSlidableContentList())
 					.showCloseButton(false)
 					.cancellableFromOutsideTouch(true)
 					.build()
@@ -260,9 +261,9 @@ class SampleFragment : Fragment() {
 		}
 	}
 
-	private fun buildSlidableContentList(): List<SlidableContent> {
+	private fun buildSlidableContentList(): List<SlideableContent> {
 		val context = requireContext()
-		val baseSlidableContent = slidableContent {
+		val baseSlidableContent = slideableContent {
 			imageUrl =
 				"https://upload.wikimedia.org/wikipedia/commons/7/7c/Aspect_ratio_16_9_example.jpg"
 			titleTextColor = ContextCompat.getColor(context, R.color.black)

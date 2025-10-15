@@ -5,7 +5,7 @@ import android.os.Parcelable
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
-import lib.virgo.showcase.ui.slidablecontent.SlidableContent
+import lib.virgo.showcase.ui.slidablecontent.SlideableContent
 import lib.virgo.showcase.ui.showcase.HighlightType
 import lib.virgo.showcase.ui.tooltip.ArrowPosition
 import lib.virgo.showcase.ui.tooltip.TextPosition
@@ -43,7 +43,7 @@ data class ShowcaseModel(
 	val imageUrl: String,
 	@param:LayoutRes val customContent: Int?,
 	val isStatusBarVisible: Boolean,
-	val slidableContentList: List<SlidableContent>?,
+	val slideableContentList: List<SlideableContent>?,
 	val radiusTopStart: Float,
 	val radiusTopEnd: Float,
 	val radiusBottomEnd: Float,

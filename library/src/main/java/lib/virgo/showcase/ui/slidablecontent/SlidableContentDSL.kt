@@ -9,8 +9,8 @@ import lib.virgo.showcase.util.Constants.DEFAULT_TITLE_TEXT_FONT_FAMILY
 import lib.virgo.showcase.util.Constants.DEFAULT_TITLE_TEXT_SIZE
 import lib.virgo.showcase.util.Constants.DEFAULT_TITLE_TEXT_STYLE
 
-fun slidableContent(build: SlidableContent.() -> Unit): SlidableContent {
-    val slidableContent = SlidableContent(
+fun slideableContent(build: SlideableContent.() -> Unit): SlideableContent {
+    val slideableContent = SlideableContent(
 	    imageUrl = "",
 	    title = null,
 	    titleTextColor = DEFAULT_TEXT_COLOR,
@@ -24,6 +24,6 @@ fun slidableContent(build: SlidableContent.() -> Unit): SlidableContent {
 	    descriptionTextStyle = DEFAULT_DESCRIPTION_TEXT_STYLE,
 	    textPosition = DEFAULT_TEXT_POSITION
     )
-    slidableContent.build()
-    return slidableContent
+    slideableContent.build()
+    return slideableContent
 }

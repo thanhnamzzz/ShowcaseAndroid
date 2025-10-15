@@ -2,7 +2,6 @@ package lib.virgo.showcase.ui.tooltip
 
 import android.content.Context
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,11 +15,12 @@ import lib.virgo.showcase.ui.layoutMarginStart
 import lib.virgo.showcase.ui.loadImage
 import lib.virgo.showcase.ui.setTextSizeInSp
 import lib.virgo.showcase.ui.setTint
-import lib.virgo.showcase.ui.slidablecontent.SlidableContent
-import lib.virgo.showcase.ui.slidablecontent.SlidableContentAdapter
+import lib.virgo.showcase.ui.slidablecontent.SlideableContent
+import lib.virgo.showcase.ui.slidablecontent.SlideableContentAdapter
 import lib.virgo.showcase.util.ActionType
 import lib.virgo.showcase.R
 import lib.virgo.showcase.databinding.LayoutTooltipBinding
+import androidx.core.graphics.drawable.toDrawable
 
 class TooltipView @JvmOverloads constructor(
     context: Context,
@@ -67,7 +67,7 @@ class TooltipView @JvmOverloads constructor(
                 setTextSizeInSp(tooltipViewState.getDescriptionTextSize())
             }
 
-            setupViewPager(tooltipViewState.showcaseModel.slidableContentList.orEmpty())
+            setupViewPager(tooltipViewState.showcaseModel.slideableContentList.orEmpty())
 
             with(imageViewTopArrow) {
                 visibility = tooltipViewState.getTopArrowVisibility()
@@ -77,13 +77,13 @@ class TooltipView @JvmOverloads constructor(
             }
             layoutContents.isClickable = tooltipViewState.isShowcaseViewClickable()
             cardContent.visibility = tooltipViewState.getContentVisibility()
-            layoutBubble.background = ColorDrawable(tooltipViewState.getBackgroundColor())
+            layoutBubble.background = tooltipViewState.getBackgroundColor().toDrawable()
             with(imageView) {
                 visibility = tooltipViewState.getImageViewVisibility()
                 loadImage(tooltipViewState.getImageUrl())
             }
-            textViewSlidableContentPosition.isVisible = tooltipViewState.isSlidableContentVisible()
-            viewPager.isVisible = tooltipViewState.isSlidableContentVisible()
+            textViewSlidableContentPosition.isVisible = tooltipViewState.isSlideableContentVisible()
+            viewPager.isVisible = tooltipViewState.isSlideableContentVisible()
             with(imageViewTooltipClose) {
                 visibility = tooltipViewState.getCloseButtonVisibility()
                 setTint(tooltipViewState.getCloseButtonColor())
@@ -97,9 +97,9 @@ class TooltipView @JvmOverloads constructor(
         }
     }
 
-    private fun setupViewPager(slidableContentList: List<SlidableContent>) {
+    private fun setupViewPager(slideableContentList: List<SlideableContent>) {
         with(binding) {
-            viewPager.adapter = SlidableContentAdapter(slidableContentList)
+            viewPager.adapter = SlideableContentAdapter(slideableContentList)
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
@@ -107,18 +107,18 @@ class TooltipView @JvmOverloads constructor(
                         String.format(
                             resources.getString(R.string.slidable_content_position_text),
                             position + 1,
-                            slidableContentList.size
+                            slideableContentList.size
                         )
                     textViewSlidableContentPosition.isVisible(
-                        shouldShowSlidableContentPosition(slidableContentList.size)
+                        shouldShowSlideableContentPosition(slideableContentList.size)
                     )
                 }
             })
         }
     }
 
-    private fun shouldShowSlidableContentPosition(slidableContentListSize: Int): Boolean {
-        return slidableContentListSize > 1
+    private fun shouldShowSlideableContentPosition(slideableContentListSize: Int): Boolean {
+        return slideableContentListSize > 1
     }
 
     fun setCustomContent(@LayoutRes customContent: Int) {

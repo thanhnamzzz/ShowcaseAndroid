@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import lib.virgo.showcase.ui.showcase.HighlightType
 import lib.virgo.showcase.ui.showcase.ShowcaseActivity
-import lib.virgo.showcase.ui.slidablecontent.SlidableContent
+import lib.virgo.showcase.ui.slidablecontent.SlideableContent
 import lib.virgo.showcase.ui.tooltip.ArrowPosition
 import lib.virgo.showcase.ui.tooltip.TextPosition
 import lib.virgo.showcase.util.Constants
@@ -218,7 +218,7 @@ class ShowcaseManager private constructor(
 
 		private var isStatusBarVisible: Boolean = true
 
-		private var slidableContentList: List<SlidableContent>? = null
+		private var slideableContentList: List<SlideableContent>? = null
 
 		fun focus(view: View) = apply { focusViews = arrayOf(view) }
 
@@ -392,8 +392,8 @@ class ShowcaseManager private constructor(
 		fun statusBarVisible(isStatusBarVisible: Boolean) =
 			apply { this.isStatusBarVisible = isStatusBarVisible }
 
-		fun setSlidableContentList(slidableContentList: List<SlidableContent>) =
-			apply { this.slidableContentList = slidableContentList }
+		fun setSlideableContentList(slideableContentList: List<SlideableContent>) =
+			apply { this.slideableContentList = slideableContentList }
 
 		fun build(): ShowcaseManager {
 			if (focusViews.isNullOrEmpty()) {
@@ -440,7 +440,7 @@ class ShowcaseManager private constructor(
 				imageUrl = imageUrl,
 				customContent = customContent,
 				isStatusBarVisible = isStatusBarVisible,
-				slidableContentList = slidableContentList,
+				slideableContentList = slideableContentList,
 				radiusTopStart = radiusTopStart,
 				radiusTopEnd = radiusTopEnd,
 				radiusBottomEnd = radiusBottomEnd,
