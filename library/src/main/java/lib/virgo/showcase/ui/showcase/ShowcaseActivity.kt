@@ -9,9 +9,11 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import dagger.hilt.android.AndroidEntryPoint
 import lib.virgo.showcase.showcase.ShowcaseModel
 import lib.virgo.showcase.util.ActionType
 
+@AndroidEntryPoint
 class ShowcaseActivity : AppCompatActivity() {
 
 	private lateinit var handler: Handler
