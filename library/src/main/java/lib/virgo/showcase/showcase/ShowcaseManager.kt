@@ -25,8 +25,9 @@ import lib.virgo.showcase.util.Constants
 import lib.virgo.showcase.util.TooltipFieldUtil
 import lib.virgo.showcase.util.toRectF
 import lib.virgo.showcase.R
+import javax.inject.Inject
 
-class ShowcaseManager private constructor(
+class ShowcaseManager @Inject constructor(
 	private val showcaseModel: ShowcaseModel,
 	@param:StyleRes val resId: Int?
 ) {
