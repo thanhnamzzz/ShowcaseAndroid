@@ -5,8 +5,8 @@ plugins {
 	alias(libs.plugins.kotlin.android)
 	`maven-publish`
 	id("kotlin-parcelize")
-	id("com.google.devtools.ksp")
-	id("com.google.dagger.hilt.android")
+//	id("com.google.devtools.ksp")
+//	id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -49,8 +49,8 @@ dependencies {
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)
 
-	implementation(libs.hilt.android)
-	ksp(libs.hilt.android.compiler)
+//	implementation(libs.hilt.android)
+//	ksp(libs.hilt.android.compiler)
 
 	implementation(libs.glide)
 }

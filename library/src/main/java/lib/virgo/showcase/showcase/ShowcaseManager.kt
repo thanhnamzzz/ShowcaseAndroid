@@ -25,9 +25,8 @@ import lib.virgo.showcase.util.Constants
 import lib.virgo.showcase.util.TooltipFieldUtil
 import lib.virgo.showcase.util.toRectF
 import lib.virgo.showcase.R
-import javax.inject.Inject
 
-class ShowcaseManager @Inject constructor(
+class ShowcaseManager private constructor(
 	private val showcaseModel: ShowcaseModel,
 	@param:StyleRes val resId: Int?
 ) {
@@ -55,8 +54,9 @@ class ShowcaseManager @Inject constructor(
 			intent.putExtra(ShowcaseActivity.HAS_CALLBACK, true)
 			intent.putExtra(ShowcaseActivity.REQUEST_CODE, requestCode)
 		}
-		val model = if (resId != null) readFromStyle(activity, resId) else showcaseModel
-		intent.putExtra(ShowcaseActivity.BUNDLE_KEY, model)
+		Constants.caseMode = if (resId != null) readFromStyle(activity, resId) else showcaseModel
+//		val model = if (resId != null) readFromStyle(activity, resId) else showcaseModel
+//		intent.putExtra(ShowcaseActivity.BUNDLE_KEY, model)
 
 		val options = ActivityOptionsCompat.makeCustomAnimation(activity, android.R.anim.fade_in, 0)
 
@@ -92,8 +92,9 @@ class ShowcaseManager @Inject constructor(
 				intent.putExtra(ShowcaseActivity.HAS_CALLBACK, true)
 				intent.putExtra(ShowcaseActivity.REQUEST_CODE, requestCode)
 			}
-			val model = if (resId != null) readFromStyle(activity, resId) else showcaseModel
-			intent.putExtra(ShowcaseActivity.BUNDLE_KEY, model)
+			Constants.caseMode = if (resId != null) readFromStyle(activity, resId) else showcaseModel
+//			val model = if (resId != null) readFromStyle(activity, resId) else showcaseModel
+//			intent.putExtra(ShowcaseActivity.BUNDLE_KEY, model)
 
 			val options =
 				ActivityOptionsCompat.makeCustomAnimation(activity, android.R.anim.fade_in, 0)

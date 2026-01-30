@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
 	alias(libs.plugins.android.application)
 	alias(libs.plugins.kotlin.android)
-	id("com.google.devtools.ksp")
-	id("com.google.dagger.hilt.android")
+//	id("com.google.devtools.ksp")
+//	id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -55,8 +55,8 @@ dependencies {
 	implementation(project(":library"))
 	implementation(libs.sdp.android)
 
-	implementation(libs.hilt.android)
-	ksp(libs.hilt.android.compiler)
+//	implementation(libs.hilt.android)
+//	ksp(libs.hilt.android.compiler)
 
 	implementation("com.trendyol:medusa:0.13.0")
 }
