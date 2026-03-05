@@ -59,6 +59,7 @@ class ShowcaseActivity : AppCompatActivity() {
 				)
 			}
 			updateStatusBar(model.isStatusBarVisible)
+			updateNavigationBar(model.isNavigationBarVisible)
 		}
 
 		onBackPressedDispatcher.addCallback {
@@ -85,6 +86,15 @@ class ShowcaseActivity : AppCompatActivity() {
 			controller.show(WindowInsetsCompat.Type.statusBars())
 		} else {
 			controller.hide(WindowInsetsCompat.Type.statusBars())
+		}
+	}
+
+	private fun updateNavigationBar(isNavigationBarVisible: Boolean) {
+		val controller = WindowCompat.getInsetsController(window, window.decorView)
+		if (isNavigationBarVisible) {
+			controller.show(WindowInsetsCompat.Type.navigationBars())
+		} else {
+			controller.hide(WindowInsetsCompat.Type.navigationBars())
 		}
 	}
 

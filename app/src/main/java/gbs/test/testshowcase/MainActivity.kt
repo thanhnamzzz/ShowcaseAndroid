@@ -1,8 +1,6 @@
 package gbs.test.testshowcase
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -73,8 +71,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigator.Naviga
 		)
 
 	private fun getRootFragments(): ArrayList<Fragment> = arrayListOf(
-		SampleFragment.newInstance(isStatusBarVisible = true),
-		SampleFragment.newInstance(isStatusBarVisible = false),
+		SampleFragment.newInstance(isStatusBarVisible = true, isNavigationBarVisible = true),
+		SampleFragment.newInstance(isStatusBarVisible = false, isNavigationBarVisible = false),
 		SecondarySampleFragment(1),
 		SecondarySampleFragment(2),
 	)

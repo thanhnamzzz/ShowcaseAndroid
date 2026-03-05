@@ -32,6 +32,20 @@ internal fun View.statusBarHeight(isStatusBarVisible: Boolean = true): Int {
 	}
 }
 
+internal fun View.navigationBarHeight(isNavigationBarVisible: Boolean = true): Int {
+	return if (isNavigationBarVisible.not() || isNavigationBarVisible().not()) {
+		0
+	} else {
+		-resources.getDimensionPixelSize(
+			resources.getIdentifier(
+				"navigation_bar_height",
+				"dimen",
+				"android"
+			)
+		)
+	}
+}
+
 /**
  *
  * @see <a>https://stackoverflow.com/a/4744499</a>

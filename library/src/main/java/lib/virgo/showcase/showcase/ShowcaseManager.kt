@@ -219,6 +219,7 @@ class ShowcaseManager private constructor(
 		private var customContent: Int? = null
 
 		private var isStatusBarVisible: Boolean = true
+		private var isNavigationBarVisible: Boolean = true
 
 		private var slideableContentList: List<SlideableContent>? = null
 
@@ -393,6 +394,8 @@ class ShowcaseManager private constructor(
 
 		fun statusBarVisible(isStatusBarVisible: Boolean) =
 			apply { this.isStatusBarVisible = isStatusBarVisible }
+		fun navigationBarVisible(isNavigationBarVisible: Boolean) =
+			apply { this.isNavigationBarVisible = isNavigationBarVisible }
 
 		fun setSlideableContentList(slideableContentList: List<SlideableContent>) =
 			apply { this.slideableContentList = slideableContentList }
@@ -442,6 +445,7 @@ class ShowcaseManager private constructor(
 				imageUrl = imageUrl,
 				customContent = customContent,
 				isStatusBarVisible = isStatusBarVisible,
+				isNavigationBarVisible = isNavigationBarVisible,
 				slideableContentList = slideableContentList,
 				radiusTopStart = radiusTopStart,
 				radiusTopEnd = radiusTopEnd,

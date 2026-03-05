@@ -32,6 +32,9 @@ class SampleFragment : Fragment() {
 	private val isStatusBarVisible by lazy {
 		requireArguments().getBoolean(KEY_IS_STATUS_BAR_VISIBLE)
 	}
+	private val isNavigationBarVisible by lazy {
+		requireArguments().getBoolean(KEY_IS_NAVIGATION_BAR_VISIBLE)
+	}
 
 	override fun onResume() {
 		super.onResume()
@@ -70,6 +73,7 @@ class SampleFragment : Fragment() {
 			medusaLifecycleOwner.handleStop()
 		} else {
 			updateStatusBar(isStatusBarVisible)
+			updateNavigationBar(isNavigationBarVisible)
 			medusaLifecycleOwner.handleStart()
 		}
 	}
@@ -90,6 +94,7 @@ class SampleFragment : Fragment() {
 		medusaLifecycleOwner.handleCreate()
 
 		updateStatusBar(isStatusBarVisible)
+		updateNavigationBar(isNavigationBarVisible)
 
 		with(binding!!) {
 			buttonTop.setOnClickListener {
@@ -113,6 +118,7 @@ class SampleFragment : Fragment() {
 					.windowBackgroundAlpha(0)
 					.titleTextSize(30f)
 					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.build()
 					.show(
 						this@SampleFragment,
@@ -142,6 +148,7 @@ class SampleFragment : Fragment() {
 					.highlightType(HighlightType.CIRCLE)
 					.textPosition(TextPosition.CENTER)
 					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.build()
 					.show(
 						this@SampleFragment,
@@ -181,6 +188,7 @@ class SampleFragment : Fragment() {
 					.cancellableFromOutsideTouch(true)
 					.toolTipVisible(false)
 					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.build()
 					.show(
 						this@SampleFragment,
@@ -201,6 +209,7 @@ class SampleFragment : Fragment() {
 					.highlightPadding(8f)
 					.textPosition(TextPosition.START)
 					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.highlightRadius(10f, 10f, 10f, 10f)
 					.build()
 					.show(
@@ -217,6 +226,8 @@ class SampleFragment : Fragment() {
 					.setSlideableContentList(buildSlidableContentList())
 					.showCloseButton(false)
 					.cancellableFromOutsideTouch(true)
+					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.build()
 					.show(
 						this@SampleFragment,
@@ -224,6 +235,21 @@ class SampleFragment : Fragment() {
 						launcher,
 						medusaLifecycleOwner
 					)
+//				ShowcaseManager.Builder()
+//					.focus(buttonSlidableContent)
+//					.customContent(R.layout.view_custom_content)
+//					.cancellableFromOutsideTouch(true)
+//					.statusBarVisible(isStatusBarVisible)
+//					.navigationBarVisible(isNavigationBarVisible)
+//					.highlightPadding(30f)
+//					.arrowPosition(ArrowPosition.DOWN)
+//					.build()
+//					.show(
+//						this@SampleFragment,
+//						REQUEST_CODE_SHOWCASE_CLICKED,
+//						launcher,
+//						medusaLifecycleOwner
+//					)
 			}
 
 			imageTop.setOnClickListener {
@@ -233,6 +259,7 @@ class SampleFragment : Fragment() {
 					.cancellableFromOutsideTouch(true)
 					.showcaseViewClickable(true)
 					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.build()
 					.show(
 						this@SampleFragment,
@@ -247,6 +274,7 @@ class SampleFragment : Fragment() {
 					.focus(buttonVanishingShowcase)
 					.showcaseViewClickable(true)
 					.statusBarVisible(isStatusBarVisible)
+					.navigationBarVisible(isNavigationBarVisible)
 					.showDurationMillis(4000L)
 					.titleText("This showcase will vanish in 4 seconds")
 					.showcaseViewVisibleIndefinitely(false)
@@ -307,10 +335,13 @@ class SampleFragment : Fragment() {
 		private const val REQUEST_CODE_SHOWCASE_CLICKED = 101
 		private const val isFragmentTransactionTest = false
 		private const val KEY_IS_STATUS_BAR_VISIBLE = "key_is_status_bar_visible"
+		private const val KEY_IS_NAVIGATION_BAR_VISIBLE = "key_is_navigation_bar_visible"
 
-		fun newInstance(isStatusBarVisible: Boolean) = SampleFragment().apply {
-			arguments = bundleOf(KEY_IS_STATUS_BAR_VISIBLE to isStatusBarVisible)
-		}
+		fun newInstance(isStatusBarVisible: Boolean, isNavigationBarVisible: Boolean) =
+			SampleFragment().apply {
+				arguments = bundleOf(KEY_IS_STATUS_BAR_VISIBLE to isStatusBarVisible)
+				arguments = bundleOf(KEY_IS_NAVIGATION_BAR_VISIBLE to isNavigationBarVisible)
+			}
 
 		fun Fragment.updateStatusBar(isStatusBarVisible: Boolean) {
 			val window = requireActivity().window
@@ -319,6 +350,16 @@ class SampleFragment : Fragment() {
 				controller.show(WindowInsetsCompat.Type.statusBars())
 			} else {
 				controller.hide(WindowInsetsCompat.Type.statusBars())
+			}
+		}
+
+		fun Fragment.updateNavigationBar(isNavigationBarVisible: Boolean) {
+			val window = requireActivity().window
+			val controller = WindowCompat.getInsetsController(window, window.decorView)
+			if (isNavigationBarVisible) {
+				controller.show(WindowInsetsCompat.Type.navigationBars())
+			} else {
+				controller.hide(WindowInsetsCompat.Type.navigationBars())
 			}
 		}
 	}

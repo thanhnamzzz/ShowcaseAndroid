@@ -27,6 +27,7 @@ class TestActivity : AppCompatActivity() {
 				.focus(binding.btnMeasure)
 				.showcaseViewClickable(true)
 				.statusBarVisible(true)
+				.navigationBarVisible(false)
 				.showDurationMillis(4000L)
 				.titleText("This showcase will vanish in 4 seconds")
 				.showcaseViewVisibleIndefinitely(false)

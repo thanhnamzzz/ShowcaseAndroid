@@ -43,6 +43,7 @@ data class ShowcaseModel(
 	val imageUrl: String,
 	@param:LayoutRes val customContent: Int?,
 	val isStatusBarVisible: Boolean,
+	val isNavigationBarVisible: Boolean,
 	val slideableContentList: List<SlideableContent>?,
 	val radiusTopStart: Float,
 	val radiusTopEnd: Float,

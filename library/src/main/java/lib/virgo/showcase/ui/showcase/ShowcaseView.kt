@@ -6,6 +6,8 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import lib.virgo.showcase.showcase.ShowcaseModel
 import lib.virgo.showcase.ui.placeTooltip
@@ -21,6 +23,8 @@ import lib.virgo.showcase.util.shape.CircleShape
 import lib.virgo.showcase.util.shape.RectangleShape
 import lib.virgo.showcase.util.statusBarHeight
 import lib.virgo.showcase.databinding.LayoutShowcaseBinding
+import lib.virgo.showcase.util.getShowcaseActivity
+import lib.virgo.showcase.util.navigationBarHeight
 
 class ShowcaseView @JvmOverloads constructor(
 	context: Context,
@@ -39,6 +43,7 @@ class ShowcaseView @JvmOverloads constructor(
 				HighlightType.CIRCLE -> {
 					CircleShape(
 						statusBarDiff = statusBarHeight(model.isStatusBarVisible),
+//						navigationBarDiff = navigationBarHeight(model.isNavigationBarVisible),
 						screenWidth = width,
 						screenHeight = height,
 						x = model.horizontalCenter(),
@@ -50,6 +55,7 @@ class ShowcaseView @JvmOverloads constructor(
 				HighlightType.RECTANGLE -> {
 					RectangleShape(
 						statusBarDiff = statusBarHeight(model.isStatusBarVisible),
+//						navigationBarDiff = navigationBarHeight(model.isNavigationBarVisible),
 						screenWidth = width,
 						screenHeight = height,
 						left = model.rectF.left - (model.highlightPadding / 2),
@@ -88,6 +94,7 @@ class ShowcaseView @JvmOverloads constructor(
 		val showcaseModel = this.showcaseModel ?: return
 
 		listenClickEvents()
+		updateSystemBars(showcaseModel)
 		val arrowPosition =
 			TooltipFieldUtil.decideArrowPosition(showcaseModel, resources.getHeightInPixels())
 		val arrowMargin = TooltipFieldUtil.calculateArrowMargin(
@@ -110,6 +117,23 @@ class ShowcaseView @JvmOverloads constructor(
 		}
 	}
 
+	private fun updateSystemBars(model: ShowcaseModel) {
+		val activity = getShowcaseActivity() ?: return
+		val controller = WindowCompat.getInsetsController(activity.window, activity.window.decorView)
+		
+		if (model.isStatusBarVisible) {
+			controller.show(WindowInsetsCompat.Type.statusBars())
+		} else {
+			controller.hide(WindowInsetsCompat.Type.statusBars())
+		}
+
+		if (model.isNavigationBarVisible) {
+			controller.show(WindowInsetsCompat.Type.navigationBars())
+		} else {
+			controller.hide(WindowInsetsCompat.Type.navigationBars())
+		}
+	}
+
 	private fun getMarginFromBottom(
 		showcaseModel: ShowcaseModel,
 		arrowPosition: AbsoluteArrowPosition
@@ -121,6 +145,8 @@ class ShowcaseView @JvmOverloads constructor(
 				arrowPosition = arrowPosition,
 				statusBarHeight = statusBarHeight(),
 				isStatusBarVisible = showcaseModel.isStatusBarVisible,
+				navigationBarHeight = navigationBarHeight(),
+				isNavigationBarVisible = showcaseModel.isNavigationBarVisible,
 				screenHeight = resources.displayMetrics.heightPixels
 			)
 
@@ -130,6 +156,8 @@ class ShowcaseView @JvmOverloads constructor(
 				arrowPosition = arrowPosition,
 				statusBarHeight = statusBarHeight(),
 				isStatusBarVisible = showcaseModel.isStatusBarVisible,
+				navigationBarHeight = navigationBarHeight(),
+				isNavigationBarVisible = showcaseModel.isNavigationBarVisible,
 				screenHeight = resources.displayMetrics.heightPixels
 			)
 		}
@@ -158,21 +186,24 @@ class ShowcaseView @JvmOverloads constructor(
 		return showcaseModel?.let {
 			val newRectF = RectF(it.rectF)
 
+			val statusBarDiff = statusBarHeight(it.isStatusBarVisible)
+			val navBarDiff = navigationBarHeight(it.isNavigationBarVisible)
+
 			when (it.highlightType) {
 				HighlightType.CIRCLE -> {
 					newRectF.left = (it.horizontalCenter() - it.radius - it.highlightPadding)
 					newRectF.right = (it.horizontalCenter() + it.radius + it.highlightPadding)
 					newRectF.top =
-						(it.verticalCenter() - it.radius - it.highlightPadding + statusBarHeight())
+						(it.verticalCenter() - it.radius - it.highlightPadding + statusBarDiff + navBarDiff)
 					newRectF.bottom =
-						(it.verticalCenter() + it.radius + it.highlightPadding - statusBarHeight())
+						(it.verticalCenter() + it.radius + it.highlightPadding + statusBarDiff + navBarDiff)
 				}
 
 				HighlightType.RECTANGLE -> {
 					newRectF.left -= (it.highlightPadding / 2)
 					newRectF.right += (it.highlightPadding / 2)
-					newRectF.top -= (it.highlightPadding / 2 - statusBarHeight())
-					newRectF.bottom += (it.highlightPadding / 2 - statusBarHeight())
+					newRectF.top += (statusBarDiff + navBarDiff - it.highlightPadding / 2)
+					newRectF.bottom += (statusBarDiff + navBarDiff + it.highlightPadding / 2)
 				}
 			}
 			newRectF.contains(x, y)
@@ -181,8 +212,10 @@ class ShowcaseView @JvmOverloads constructor(
 
 	private fun getClickedViewIndex(x: Float, y: Float): Int {
 		val list = showcaseModel?.highlightedViewsRectFList
+		val statusBarDiff = statusBarHeight(showcaseModel?.isStatusBarVisible ?: true)
+		val navBarDiff = navigationBarHeight(showcaseModel?.isNavigationBarVisible ?: true)
 
-		return list?.indexOfFirst { it.contains(x, y - statusBarHeight()) } ?: CONST_VIEW_NOT_FOUND
+		return list?.indexOfFirst { it.contains(x, y - statusBarDiff - navBarDiff) } ?: CONST_VIEW_NOT_FOUND
 	}
 
 	private fun setCustomContent() {
